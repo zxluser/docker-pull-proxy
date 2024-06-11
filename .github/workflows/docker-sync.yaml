@@ -36,8 +36,8 @@ jobs:
     - name: Copy beta to ECR
       uses: truemark/skopeo-copy-action@v1
       with:
-        src-image: "docker://${src}"
-        dest-image: "docker://${dist}"
+        src-image: "docker://$src"
+        dest-image: "docker://$dist"
         dest-username: "${{ secrets.ALIYUN_REGISTRY_USER }}"
         dest-password: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
         multi-arch: "all"
