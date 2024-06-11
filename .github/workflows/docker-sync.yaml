@@ -19,25 +19,29 @@ jobs:
   build:
     name: sync
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.pare.outputs.src }}
+      output2: ${{ steps.pare.outputs.dist }}
     steps:
       
     - name: Check out code
       uses: actions/checkout@v2
     - name: pare trigger
+      id: pare
       run: |
         data=`cat trigger.txt`
         
         src=$(echo $data | awk '{print $1}')
         dist=$(echo $data | awk '{print $2}')
 
-        echo "src=${src}" >> "$GITHUB_ENV"
-        echo "dist=${dist}" >> "$GITHUB_ENV"
+        echo "src=${src}" >> "$GITHUB_OUTPUT"
+        echo "dist=${dist}" >> "$GITHUB_OUTPUT"
         
     - name: Copy beta to ECR
       uses: truemark/skopeo-copy-action@v1
       with:
-        src-image: "docker://${{src}}"
-        dest-image: "docker://${{dist}}"
+        src-image: "docker://${{ steps.pare.outputs.src }}"
+        dest-image: "docker://${{ steps.pare.outputs.dist }}"
         dest-username: "${{ secrets.ALIYUN_REGISTRY_USER }}"
         dest-password: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
         multi-arch: "all"
