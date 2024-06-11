@@ -1,1 +1,46 @@
+name: Docker
 
+on:
+  push:
+    branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+
+env:
+  REGISTRY: registry.cn-hangzhou.aliyuncs.com
+  ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
+  ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
+  MM_NOTIFY_URL: "${{ secrets.MM_NOTIFY_URL }}"
+
+
+jobs:
+  build:
+    name: sync
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Set up skopeo'
+      uses: warjiang/setup-skopeo@latest
+      with:
+        version: latest
+
+    - name: 'Sync images'
+      run: |
+        data=`cat trigger.txt`
+        
+        src=$(echo $data | awk '{print $1}')
+        dist=$(echo $data | awk '{print $2}')
+        
+        skopeo --version
+        
+        skopeo copy --dest-creds \
+        ${{ secrets.ALIYUN_REGISTRY_USER }}:${{ secrets.ALIYUN_REGISTRY_PASSWORD }} \
+        docker://${src} \
+        docker://${dist}
+
+        if [ $MM_NOTIFY_URL ];then
+          curl  -H 'Content-Type: application/json' \
+            -d "{\"msgtype\": \"text\",\"text\": {\"content\":\"同步成功 $data \"}}" \
+            $MM_NOTIFY_URL
+        else
+          echo 'MM_NOTIFY_URL not set'
+        fi
