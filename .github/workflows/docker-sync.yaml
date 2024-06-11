@@ -20,26 +20,30 @@ jobs:
     name: sync
     runs-on: ubuntu-latest
     steps:
-    - name: Set up skopeo environment
-      uses: warjiang/setup-skopeo@v0.1.3
       
     - name: Check out code
       uses: actions/checkout@v2
-
-    - name: 'Sync images'
+    - name: pare trigger
       run: |
         data=`cat trigger.txt`
         
         src=$(echo $data | awk '{print $1}')
         dist=$(echo $data | awk '{print $2}')
-        
-        skopeo --version
-        
-        skopeo copy --multi-arch all --dest-creds \
-        ${{ secrets.ALIYUN_REGISTRY_USER }}:${{ secrets.ALIYUN_REGISTRY_PASSWORD }} \
-        docker://${src} \
-        docker://${dist}
 
+        echo "src=${src}" >> "$GITHUB_ENV"
+        echo "dist=${dist}" >> "$GITHUB_ENV"
+        
+    - name: Copy beta to ECR
+      uses: truemark/skopeo-copy-action@v1
+      with:
+        src-image: "docker://${src}"
+        dest-image: "docker://${dist}"
+        dest-username: "${{ secrets.ALIYUN_REGISTRY_USER }}"
+        dest-password: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
+        multi-arch: "all"
+    - name: 'notify'
+      run: |
+        data=`cat trigger.txt`
         if [ $MM_NOTIFY_URL ];then
           curl  -H 'Content-Type: application/json' \
             -d "{\"msgtype\": \"text\",\"text\": {\"content\":\"同步成功 $data \"}}" \
