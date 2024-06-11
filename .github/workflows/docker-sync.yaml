@@ -35,7 +35,7 @@ jobs:
         
         skopeo --version
         
-        skopeo copy --dest-creds \
+        skopeo copy --multi-arch all --dest-creds \
         ${{ secrets.ALIYUN_REGISTRY_USER }}:${{ secrets.ALIYUN_REGISTRY_PASSWORD }} \
         docker://${src} \
         docker://${dist}
