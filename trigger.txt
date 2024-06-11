@@ -1,1 +1,1 @@
-homeassistant/home-assistant:2024.6 registry.cn-hangzhou.aliyuncs.com/yaming116/home-assistant:2024.6
+alpine:20240606 registry.cn-hangzhou.aliyuncs.com/yaming116/alpine:20240606
