@@ -1,1 +1,1 @@
-alpine:20240606 registry.cn-hangzhou.aliyuncs.com/yaming116/alpine:20240606
+langgenius/dify-api:0.6.11 registry.cn-hangzhou.aliyuncs.com/gkzx2024/gkzx2024/langgenius/dify-api:0.6.11
