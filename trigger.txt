@@ -1,1 +1,1 @@
-langgenius/dify-sandbox:0.2.1 registry.cn-hangzhou.aliyuncs.com/gkzx2024/dify-sandbox:0.2.1
+chivalry1314/dify-api:main registry.cn-hangzhou.aliyuncs.com/gkzx2024/dify-gkzx-api:main
