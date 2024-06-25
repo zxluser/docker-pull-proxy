@@ -1,1 +1,1 @@
-ubuntu/squid:latest registry.cn-hangzhou.aliyuncs.com/gkzx2024/squid:latest
+chivalry1314/dify-api:main registry.cn-hangzhou.aliyuncs.com/gkzx2024/dify-api:202406250557
