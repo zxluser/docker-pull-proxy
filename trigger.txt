@@ -1,1 +1,1 @@
-chivalry1314/dify-api:main registry.cn-hangzhou.aliyuncs.com/gkzx2024/dify-api:202406250557
+mitmproxy/mitmproxy:10.3.0 registry.cn-hangzhou.aliyuncs.com/gkzx2024/mitmproxy:10.3.0
