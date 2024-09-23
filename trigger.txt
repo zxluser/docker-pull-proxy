@@ -1,1 +1,1 @@
-eclipse-temurin:21-jre registry.cn-hangzhou.aliyuncs.com/gkzx2024/eclipse-temurin:21-jre
+nginx:latest registry.cn-hangzhou.aliyuncs.com/gkzx2024/nginx:latest
